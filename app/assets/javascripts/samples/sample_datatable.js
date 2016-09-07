@@ -472,6 +472,8 @@ function updateButtons() {
         if (rowsSelected.length == 1) {
             $("#editSample").prop("disabled", false);
             $("#editSample").removeClass("disabled");
+            $("#infoSample").prop("disabled", false);
+            $("#infoSample").removeClass("disabled");
             $("#deleteSamplesButton").prop("disabled", false);
             $("#deleteSamplesButton").removeClass("disabled");
             $("#exportSamplesButton").removeClass("disabled");
@@ -485,6 +487,8 @@ function updateButtons() {
         else if (rowsSelected.length == 0) {
             $("#editSample").prop("disabled", true);
             $("#editSample").addClass("disabled");
+            $("#infoSample").prop("disabled", true);
+            $("#infoSample").addClass("disabled");
             $("#deleteSamplesButton").prop("disabled", true);
             $("#deleteSamplesButton").addClass("disabled");
             $("#exportSamplesButton").addClass("disabled");
@@ -498,6 +502,8 @@ function updateButtons() {
         else {
             $("#editSample").prop("disabled", true);
             $("#editSample").addClass("disabled");
+            $("#infoSample").prop("disabled", true);
+            $("#infoSample").addClass("disabled");
             $("#deleteSamplesButton").prop("disabled", false);
             $("#deleteSamplesButton").removeClass("disabled");
             $("#exportSamplesButton").removeClass("disabled");
@@ -516,6 +522,8 @@ function updateButtons() {
             $("#addSample").prop("disabled",true);
             $("#editSample").addClass("disabled");
             $("#editSample").prop("disabled",true);
+            $("#infoSample").addClass("disabled");
+            $("#infoSample").prop("disabled",true);
             $("#addNewColumn").addClass("disabled");
             $("#addNewColumn").prop("disabled", true);
             $("#exportSamplesButton").addClass("disabled");
