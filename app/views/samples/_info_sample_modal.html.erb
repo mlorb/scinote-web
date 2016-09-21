@@ -3,16 +3,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title"><%= t("samples.modal_info.title", sample: @current_user.samples.find(4).name) %></h4>
+        <h4 class="modal-title"><%= t('samples.modal_info.title', sample: @display_query) %></h4>
       </div>
+
       <div class="modal-body">
-        <p>One fine body…</p>
-
-
-        <%= @current_sample = @current_user.samples.find(4) %>
-        <%= @search_query = 'zzz' %>
-        <%= @search_category = '' %>
-
         <div class="row">
           <div class="col-xs-12 col-sm-3" id="search-menu">
             <ul class="nav nav-pills nav-stacked nav-stacked-arrow">
@@ -21,7 +15,9 @@
                 <%= "active" if @search_category.present? and @search_category == :projects %>
                 <%= "disabled" if @project_search_count == 0 %>"
               >
-                <a href="?<%= {category: 'projects', q: @search_query, utf8: '✓'}.to_query %>">
+                <a href="#"
+                   data-href="<%= sample_url(@sample, category: 'projects', q: @search_query, utf8: '✓') %>"
+                   data-searchCategory="<%= ( @project_search_count > 0 ) ? 'present' : 'notPresent' %>">
                   <span class="badge pull-right"><%= @project_search_count %></span>
                   <span class="glyphicon glyphicon-blackboard"></span>
                   <%= t'Projects' %>
@@ -32,7 +28,9 @@
                 <%= "active" if @search_category.present? and @search_category == :experiments %>
                 <%= "disabled" if @experiment_search_count == 0 %>"
               >
-                <a href="?<%= {category: 'experiments', q: @search_query, utf8: '✓'}.to_query %>">
+                <a href="#"
+                   data-href="<%= sample_url(@sample, category: 'experiments', q: @search_query, utf8: '✓/') %>"
+                   data-searchCategory="<%= ( @experiment_search_count > 0 ) ? 'present' : 'notPresent' %>">
                   <span class="badge pull-right"><%= @experiment_search_count %></span>
                   <%= fa_icon 'flask' %>
                   <%= t'Experiments' %>
@@ -43,7 +41,9 @@
                 <%= "active" if @search_category.present? and @search_category == :workflows %>
                 <%= "disabled" if @workflow_search_count == 0 %>"
               >
-                <a href="?<%= {category: 'workflows', q: @search_query, utf8: '✓'}.to_query %>">
+                <a href="#"
+                   data-href="<%= sample_url(@sample, category: 'workflows', q: @search_query, utf8: '✓') %>"
+                   data-searchCategory="<%= ( @workflow_search_count > 0 ) ? 'present' : 'notPresent' %>">
                   <span class="badge pull-right"><%= @workflow_search_count %></span>
                   <span class="glyphicon glyphicon-random"></span>
                   <%= t'Workflows' %>
@@ -54,7 +54,9 @@
                 <%= "active" if @search_category.present? and @search_category == :modules %>
                 <%= "disabled" if @module_search_count == 0 %>"
               >
-                <a href="?<%= {category: 'modules', q: @search_query, utf8: '✓'}.to_query %>">
+                <a href="#"
+                   data-href="<%= sample_url(@sample, category: 'modules', q: @search_query, utf8: '✓') %>"
+                   data-searchCategory="<%= ( @module_search_count > 0 ) ? 'present' : 'notPresent' %>">
                   <span class="badge pull-right"><%= @module_search_count %></span>
                   <span class="glyphicon glyphicon-credit-card"></span>
                   <%= t'Modules' %>
@@ -65,7 +67,9 @@
                 <%= "active" if @search_category.present? and @search_category == :results %>
                 <%= "disabled" if @result_search_count == 0 %>"
               >
-                <a href="?<%= {category: 'results', q: @search_query, utf8: '✓'}.to_query %>">
+                <a href="#"
+                   data-href="<%= sample_url(@sample, category: 'results', q: @search_query, utf8: '✓') %>"
+                   data-searchCategory="<%= ( @result_search_count > 0 ) ? 'present' : 'notPresent' %>">
                   <span class="badge pull-right"><%= @result_search_count %></span>
                   <span class="glyphicon glyphicon-modal-window"></span>
                   <%= t'Results' %>
@@ -76,7 +80,9 @@
                 <%= "active" if @search_category.present? and @search_category == :tags %>
                 <%= "disabled" if @tag_search_count == 0 %>"
               >
-                <a href="?<%= {category: 'tags', q: @search_query, utf8: '✓'}.to_query %>">
+                <a href="#"
+                   data-href="<%= sample_url(@sample, category: 'tags', q: @search_query, utf8: '✓') %>"
+                   data-searchCategory="<%= ( @tag_search_count > 0 ) ? 'present' : 'notPresent' %>">
                   <span class="badge pull-right"><%= @tag_search_count %></span>
                   <span class="glyphicon glyphicon-tags"></span>
                   <%= t'Tags' %>
@@ -87,7 +93,9 @@
                 <%= "active" if @search_category.present? and @search_category == :reports %>
                 <%= "disabled" if @report_search_count == 0 %>"
               >
-                <a href="?<%= {category: 'reports', q: @search_query, utf8: '✓'}.to_query %>">
+                <a href="#"
+                   data-href="<%= sample_url(@sample, category: 'reports', q: @search_query, utf8: '✓') %>"
+                   data-searchCategory="<%= ( @report_search_count > 0 ) ? 'present' : 'notPresent' %>">
                   <span class="badge pull-right"><%= @report_search_count %></span>
                   <span class="glyphicon glyphicon-align-left"></span>
                   <%= t'Reports' %>
@@ -98,7 +106,9 @@
                 <%= "active" if @search_category.present? and @search_category == :protocols %>
                 <%= "disabled" if @protocol_search_count == 0 %>"
               >
-                <a href="?<%= {category: 'protocols', q: @search_query, utf8: '✓'}.to_query %>">
+                <a href="#"
+                   data-href="<%= sample_url(@sample, category: 'protocols', q: @search_query, utf8: '✓') %>"
+                   data-searchCategory="<%= ( @protocol_search_count > 0 ) ? 'present' : 'notPresent' %>">
                   <span class="badge pull-right"><%= @protocol_search_count %></span>
                   <span class="glyphicon glyphicon-list-alt"></span>
                   <%= t'Protocols' %>
@@ -109,7 +119,9 @@
                 <%= "active" if @search_category.present? and @search_category == :steps %>
                 <%= "disabled" if @step_search_count == 0 %>"
               >
-                <a href="?<%= {category: 'steps', q: @search_query, utf8: '✓'}.to_query %>">
+                <a href="#"
+                   data-href="<%= sample_url(@sample, category: 'steps', q: @search_query, utf8: '✓') %>"
+                   data-searchCategory="<%= ( @step_search_count > 0 ) ? 'present' : 'notPresent' %>">
                   <span class="badge pull-right"><%= @step_search_count %></span>
                   <span class="glyphicon glyphicon-circle-arrow-right"></span>
                   <%= t'Steps' %>
@@ -120,7 +132,9 @@
                 <%= "active" if @search_category.present? and @search_category == :checklists %>
                 <%= "disabled" if @checklist_search_count == 0 %>"
               >
-                <a href="?<%= {category: 'checklists', q: @search_query, utf8: '✓'}.to_query %>">
+                <a href="#"
+                   data-href="<%= sample_url(@sample, category: 'checklists', q: @search_query, utf8: '✓') %>"
+                   data-searchCategory="<%= ( @checklist_search_count > 0 ) ? 'present' : 'notPresent' %>">
                   <span class="badge pull-right"><%= @checklist_search_count %></span>
                   <span class="glyphicon glyphicon-list"></span>
                   <%= t'Checklists' %>
@@ -128,21 +142,12 @@
               </li>
               <li role="presentation"
                 class="
-                <%= "active" if @search_category.present? and @search_category == :samples %>
-                <%= "disabled" if @sample_search_count == 0 %>"
-              >
-                <a href="?<%= {category: 'samples', q: @search_query, utf8: '✓'}.to_query %>">
-                  <span class="badge pull-right"><%= @sample_search_count %></span>
-                  <span class="glyphicon glyphicon-tint"></span>
-                  <%= t'Samples' %>
-                </a>
-              </li>
-              <li role="presentation"
-                class="
                 <%= "active" if @search_category.present? and @search_category == :assets %>
                 <%= "disabled" if @asset_search_count == 0 %>"
               >
-                <a href="?<%= {category: 'assets', q: @search_query, utf8: '✓'}.to_query %>">
+                <a href="#"
+                   data-href="<%= sample_url(@sample, category: 'assets', q: @search_query, utf8: '✓') %>"
+                   data-searchCategory="<%= ( @asset_search_count > 0 ) ? 'present' : 'notPresent' %>">
                   <span class="badge pull-right"><%= @asset_search_count %></span>
                   <span class="glyphicon glyphicon-file"></span>
                   <%= t'Assets' %>
@@ -153,7 +158,9 @@
                 <%= "active" if @search_category.present? and @search_category == :tables %>
                 <%= "disabled" if @table_search_count == 0 %>"
               >
-                <a href="?<%= {category: 'tables', q: @search_query, utf8: '✓'}.to_query %>">
+                <a href="#"
+                   data-href="<%= sample_url(@sample, category: 'tables', q: @search_query, utf8: '✓') %>"
+                   data-searchCategory="<%= ( @table_search_count > 0 ) ? 'present' : 'notPresent' %>">
                   <span class="badge pull-right"><%= @table_search_count %></span>
                   <span class="glyphicon glyphicon-th"></span>
                   <%= t'Tables' %>
@@ -164,7 +171,9 @@
                 <%= "active" if @search_category.present? and @search_category == :comments %>
                 <%= "disabled" if @comment_search_count == 0 %>"
               >
-                <a href="?<%= {category: 'comments', q: @search_query, utf8: '✓'}.to_query %>">
+                <a href="#"
+                   data-href="<%= sample_url(@sample, category: 'comments', q: @search_query, utf8: '✓') %>"
+                   data-searchCategory="<%= ( @comment_search_count > 0 ) ? 'present' : 'notPresent' %>">
                   <span class="badge pull-right"><%= @comment_search_count %></span>
                   <span class="glyphicon glyphicon-comment"></span>
                   <%= t'Comments' %>
@@ -187,7 +196,7 @@
               <%= render 'search/results/projects', search_query: @search_query, results: @project_results %>
             <% end %>
             <% if @search_category == :experiments and @experiment_search_count > 0 %>
-              <%= render 'search/results/experiments', search_query: @search_query, results: @experiment_results %>
+              <%= render '/search/results/experiments', search_query: @search_query, results: @experiment_results %>
             <% end %>
             <% if @search_category == :workflows and @workflow_search_count > 0 %>
               <%= render 'search/results/workflows', search_query: @search_query, results: @workflow_results %>
@@ -231,14 +240,8 @@
           <% end %>
         </div>
 
-
-
-
-
-
-
-
       </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal"><%= t("general.close")%></button>
       </div>

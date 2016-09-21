@@ -3,7 +3,7 @@
 <%= render partial: "samples/delete_samples_modal" %>
 <%= render partial: "samples/create_sample_group_modal" %>
 <%= render partial: "samples/create_sample_type_modal" %>
-<%= render partial: "samples/info_sample_modal" %>
+
 <!-- Modal for parsing sample sheets should be empty at first -->
 <div class="modal fade" id="modal-parse-samples" tabindex="-1" role="dialog" aria-labelledby=="modal-parse-samples-label"></div>
 
@@ -44,11 +44,6 @@
 
 
   <!-- Button to trigger modal -->
-<a href="#modal-info-sample" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
-<button type="button" data-toggle="modal" data-target="#modal-info-sample">Launch modal</button>
- 
-
-
   <div id="datatables-buttons" style="display: inline;">
   </div>
 
@@ -103,11 +98,7 @@
     <span class="glyphicon glyphicon-pencil"></span>
     <span class="hidden-xs"><%= t("samples.edit_sample") %></span>
   </button>
-
-  <button type="button" class="btn btn-default editAdd" id="infoSample" data-toggle="modal" data-target="#modal-info-sample" disabled>
-    <span class="hidden-xs"><%= t("samples.info_sample") %></span>
-  </button>
-
+  
   <% if can_delete_samples(@organization) %>
     <button type="button" class="btn btn-default"
       id="deleteSamplesButton" data-target="#deleteSamples" data-toggle="modal" disabled>

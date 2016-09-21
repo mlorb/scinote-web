@@ -1,9 +1,13 @@
 class SamplesController < ApplicationController
-  before_action :load_vars, only: [:edit, :update, :destroy]
-  before_action :load_vars_nested, only: [:new, :create]
+  include SearchActions
+  SearchActions.set(:samples)
 
-  before_action :check_edit_permissions, only: [:edit]
-  before_action :check_destroy_permissions, only: [:destroy]
+  before_action :load_vars, only: [:edit, :update, :destroy, :show]
+  before_action :load_vars_nested, only: [:new, :create]
+  before_action :load_show_vars, only: :show
+
+  before_action :check_edit_permissions, only: :edit
+  before_action :check_destroy_permissions, only: :destroy
 
   def new
     respond_to do |format|
@@ -97,6 +101,52 @@ class SamplesController < ApplicationController
       else
         format.json { render json: {}, status: :unauthorized }
       end
+    end
+  end
+
+  def show
+    count_search_results
+
+    search_projects if @search_category == :projects
+    search_experiments if @search_category == :experiments
+    search_workflows if @search_category == :workflows
+    search_modules if @search_category == :modules
+    search_results if @search_category == :results
+    search_tags if @search_category == :tags
+    search_reports if @search_category == :reports
+    search_protocols if @search_category == :protocols
+    search_steps if @search_category == :steps
+    search_checklists if @search_category == :checklists
+    search_samples if @search_category == :samples
+   # search_assets if @search_category == :assets
+    search_tables if @search_category == :tables
+    search_comments if @search_category == :comments
+
+    @search_pages = (@search_count.to_f / SEARCH_LIMIT.to_f).ceil
+    @start_page = @search_page - 2
+    @start_page = 1 if @start_page < 1
+    @end_page = @start_page + 4
+
+    if @end_page > @search_pages
+      @end_page = @search_pages
+      @start_page = @end_page - 4
+      @start_page = 1 if @start_page < 1
+    end
+    respond_to do |format|
+      format.json do
+        render json: {
+          html: render_to_string(
+            partial: 'info_sample_modal.html.erb'
+          )
+        }
+      end
+      # format.html do
+      #   render json: {
+      #     html: render_to_string(
+      #       partial: 'info_sample_modal.html.erb', 
+      #     )
+      #   }
+      # end
     end
   end
 
@@ -265,6 +315,13 @@ class SamplesController < ApplicationController
 
   private
 
+  def load_show_vars
+    @search_category = params[:category] || ''
+    @search_category = @search_category.to_sym
+    @search_page = 1
+    @search_query = @sample.name
+  end
+
   def load_vars
     @sample = Sample.find_by_id(params[:id])
     @organization = @sample.organization
@@ -304,7 +361,8 @@ class SamplesController < ApplicationController
     params.require(:sample).permit(
       :name,
       :sample_type_id,
-      :sample_group_id
+      :sample_group_id,
+      :category
     )
   end
 end

@@ -1,9 +1,5 @@
 //= require datatables
 
-$('#myModal').modal({
-  keyboard: false
-})
-
 // Create custom field ajax
 $("#modal-create-custom-field").on("show.bs.modal", function(event) {
     // Clear input when modal is opened

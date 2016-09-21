@@ -862,7 +862,6 @@ en:
     edit_sample: "Edit"
     save_sample: "Save"
     cancel_save: "Cancel"
-    info_sample: "Info"
     column_visibility: "Visible columns"
     add_new_sample_type: "Add sample type"
     add_new_sample_group: "Add sample group"
