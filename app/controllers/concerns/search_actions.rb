@@ -6,18 +6,18 @@ module SearchActions
   end
 
   def search_by_name(model)
-    if( @@targetController == :samples && model == User )
+    if @@targetController == :samples && model == User
       model.search(true, @search_query, nil)
-	else
-	  model.search(current_user, true, @search_query, @search_page)
-	end
+    else
+      model.search(current_user, true, @search_query, @search_page)
+    end
   end
 
   def count_by_name(model)
     search_by_name(model).limit(nil).offset(nil).size
   end
 
-  def count_search_results()
+  def count_search_results
     @project_search_count = count_by_name Project
     @experiment_search_count = count_by_name Experiment
     @workflow_search_count = count_by_name MyModuleGroup

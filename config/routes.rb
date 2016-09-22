@@ -195,7 +195,7 @@ Rails.application.routes.draw do
   end
 
   resources :samples, only: [:edit, :update, :destroy]
-  get 'samples/:id', to: 'samples#show'
+  get 'samples/:id', to: 'samples#show', defaults: { format: 'json' }
 
   resources :sample_types, only: [:edit, :update]
   resources :sample_groups, only: [:edit, :update]
