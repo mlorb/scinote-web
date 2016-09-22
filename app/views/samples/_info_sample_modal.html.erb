@@ -3,12 +3,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><%= t('samples.modal_info.title', sample: @display_query) %></h4>
+        <h4 class="modal-title"><%= t('samples.modal_info.title', sample: @sample.name) %></h4>
       </div>
 
       <div class="modal-body">
         <div class="row">
-          <div class="col-xs-12 col-sm-3" id="search-menu">
+          <div class="col-xs-12 col-sm-4" id="search-menu">
             <ul class="nav nav-pills nav-stacked nav-stacked-arrow">
               <li role="presentation"
                 class="
@@ -179,21 +179,32 @@
                   <%= t'Comments' %>
                 </a>
               </li>
+              <li role="presentation"
+                class="
+                <%= "active" if @search_category.present? and @search_category == :users %>
+                <%= "disabled" if @user_search_count == 0 %>"
+              >
+                <a href="#"
+                   data-href="<%= sample_url(@sample, category: 'users', q: @search_query, utf8: '✓') %>"
+                   data-searchCategory="<%= ( @user_search_count > 0 ) ? 'present' : 'notPresent' %>">
+                  <span class="badge pull-right"><%= @user_search_count %></span>
+                  <span class="glyphicon glyphicon-user"></span>
+                  <%= t'Comments' %>
+                </a>
+              </li>
             </ul>
           </div>
 
-          <div class="col-xs-12 col-sm-9" id="search-content">
-            <div class="container-fluid" id="search-container">
+          <div class="col-xs-12 col-sm-8" id="search-content-module">
+            <hr class="visible-xs">
+            <div class="container-fluid" id="search-container-module">
             <% if @search_results_count == 0 %>
             <p><%= t'search.index.error.no_results', q: @search_query %></p>
             <% end %>
-
-            <hr class="visible-xs">
-
+            </div>
           </div>
-          </div>
+
         </div>
-
       </div>
 
       <div class="modal-footer">

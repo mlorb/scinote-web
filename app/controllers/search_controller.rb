@@ -1,5 +1,6 @@
 class SearchController < ApplicationController
   include SearchActions
+  @@target_controller = :search
 
   before_filter :load_vars, only: :index
   before_filter :load_markdown, only: :index

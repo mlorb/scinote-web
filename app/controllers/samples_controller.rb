@@ -1,6 +1,6 @@
 class SamplesController < ApplicationController
   include SearchActions
-  SearchActions.set(:samples)
+  @@target_controller = :samples
 
   before_action :load_vars, only: [:edit, :update, :destroy, :show]
   before_action :load_vars_nested, only: [:new, :create]
@@ -121,6 +121,7 @@ class SamplesController < ApplicationController
     search_assets if @search_category == :assets
     search_tables if @search_category == :tables
     search_comments if @search_category == :comments
+    search_users if @search_category == :users
 
     @search_pages = (@search_count.to_f / SEARCH_LIMIT.to_f).ceil
     @start_page = @search_page - 2
@@ -445,6 +446,12 @@ class SamplesController < ApplicationController
       content = render_to_string(
                 partial: 'search/results/comments.html.erb', locals: {search_query: @search_query,
                                                             results: @comment_results }
+              )
+    end
+    if (@search_category == :users && @user_search_count > 0)
+      content = render_to_string(
+                partial: 'search/results/users.html.erb', locals: {search_query: @search_query,
+                                                            results: @user_results }
               )
     end
     content

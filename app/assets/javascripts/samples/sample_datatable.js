@@ -318,10 +318,10 @@ function sampleInfoClickListener() {
         }).done(function(xhr, settings, data) {
             animateSpinner($("#modal-info-sample"), false);
             $("#modal-info-sample")
-                    .find("#search-content")
+                    .find("#search-container-module")
                     .empty();
             $("#modal-info-sample")
-                .find("#search-content")
+                .find("#search-container-module")
                 .append($.parseHTML(data.responseJSON.content));
         }).fail(function(error){
             animateSpinner($("#modal-info-sample"), false);
