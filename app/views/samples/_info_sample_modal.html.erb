@@ -182,9 +182,7 @@
             </ul>
           </div>
 
-          <% if not @search_category.empty? %>
           <div class="col-xs-12 col-sm-9" id="search-content">
-
             <div class="container-fluid" id="search-container">
             <% if @search_results_count == 0 %>
             <p><%= t'search.index.error.no_results', q: @search_query %></p>
@@ -192,53 +190,8 @@
 
             <hr class="visible-xs">
 
-            <% if @search_category == :projects and @project_search_count > 0 %>
-              <%= render 'search/results/projects', search_query: @search_query, results: @project_results %>
-            <% end %>
-            <% if @search_category == :experiments and @experiment_search_count > 0 %>
-              <% experiment_view =  render '/search/results/experiments', search_query: @search_query, results: @experiment_results %>
-              <%= render_to_string(action: experiment_view, layout: false) %>
-            <% end %>
-            <% if @search_category == :workflows and @workflow_search_count > 0 %>
-              <%= render 'search/results/workflows', search_query: @search_query, results: @workflow_results %>
-            <% end %>
-            <% if @search_category == :modules and @module_search_count > 0 %>
-              <%= render 'search/results/modules', search_query: @search_query, results: @module_results %>
-            <% end %>
-            <% if @search_category == :results and @result_search_count > 0 %>
-              <%= render 'search/results/results', search_query: @search_query, results: @result_results %>
-            <% end %>
-            <% if @search_category == :tags and @tag_search_count > 0 %>
-              <%= render 'search/results/tags', search_query: @search_query, results: @tag_results %>
-            <% end %>
-            <% if @search_category == :reports and @report_search_count > 0 %>
-              <%= render 'search/results/reports', search_query: @search_query, results: @report_results %>
-            <% end %>
-            <% if @search_category == :protocols and @protocol_search_count > 0 %>
-              <%= render 'search/results/protocols', search_query: @search_query, results: @protocol_results %>
-            <% end %>
-            <% if @search_category == :steps and @step_search_count > 0 %>
-              <%= render 'search/results/steps', search_query: @search_query, results: @step_results %>
-            <% end %>
-            <% if @search_category == :checklists and @checklist_search_count > 0 %>
-              <%= render 'search/results/checklists', search_query: @search_query, results: @checklist_results %>
-            <% end %>
-            <% if @search_category == :samples and @sample_search_count > 0 %>
-              <%= render 'search/results/samples', search_query: @search_query, results: @sample_results %>
-            <% end %>
-            <% if @search_category == :assets and @asset_search_count > 0 %>
-              <%= render 'search/results/assets', search_query: @search_query, results: @asset_results %>
-            <% end %>
-            <% if @search_category == :tables and @table_search_count > 0 %>
-              <%= render 'search/results/tables', search_query: @search_query, results: @table_results %>
-            <% end %>
-            <% if @search_category == :comments and @comment_search_count > 0 %>
-              <%= render 'search/results/comments', search_query: @search_query, results: @comment_results %>
-            <% end %>
-
           </div>
           </div>
-          <% end %>
         </div>
 
       </div>

@@ -118,7 +118,7 @@ class SamplesController < ApplicationController
     search_steps if @search_category == :steps
     search_checklists if @search_category == :checklists
     search_samples if @search_category == :samples
-   # search_assets if @search_category == :assets
+    search_assets if @search_category == :assets
     search_tables if @search_category == :tables
     search_comments if @search_category == :comments
 
@@ -132,21 +132,16 @@ class SamplesController < ApplicationController
       @start_page = @end_page - 4
       @start_page = 1 if @start_page < 1
     end
+
     respond_to do |format|
       format.json do
         render json: {
           html: render_to_string(
             partial: 'info_sample_modal.html.erb'
-          )
+          ),
+          content: render_content
         }
       end
-      # format.html do
-      #   render json: {
-      #     html: render_to_string(
-      #       partial: 'info_sample_modal.html.erb', 
-      #     )
-      #   }
-      # end
     end
   end
 
@@ -364,5 +359,94 @@ class SamplesController < ApplicationController
       :sample_group_id,
       :category
     )
+  end
+
+  def render_content
+    content = ''
+    if (@search_category == :projects && @project_search_count > 0)
+      content = render_to_string(
+                partial: 'search/results/projects.html.erb', locals: {search_query: @search_query,
+                                                            results: @project_results }
+              )
+    end
+    if (@search_category == :experiments && @experiment_search_count > 0)
+      content = render_to_string(
+                partial: 'search/results/experiments.html.erb', locals: {search_query: @search_query,
+                                                                 results: @experiment_results }
+              )
+    end
+    if (@search_category == :workflows && @workflow_search_count > 0)
+      content = render_to_string(
+                partial: 'search/results/workflows.html.erb', locals: {search_query: @search_query,
+                                                             results: @workflow_results }
+              )
+    end
+    if (@search_category == :modules && @module_search_count > 0)
+      content = render_to_string(
+                partial: 'search/results/modules.html.erb', locals: {search_query: @search_query,
+                                                           results: @module_results }
+              )
+    end
+    if (@search_category == :results && @result_search_count > 0)
+      content = render_to_string(
+                partial: 'search/results/results.html.erb', locals: {search_query: @search_query,
+                                                           results: @result_results }
+              )
+    end
+    if (@search_category == :tags && @tag_search_count > 0)
+      content = render_to_string(
+                partial: 'search/results/tags.html.erb', locals: {search_query: @search_query,
+                                                        results: @tag_results }
+              )
+    end
+    if (@search_category == :reports && @report_search_count > 0)
+      content = render_to_string(
+                partial: 'search/results/reports.html.erb', locals: {search_query: @search_query,
+                                                          results: @report_results }
+              )
+    end
+    if (@search_category == :protocols && @protocol_search_count > 0)
+      content = render_to_string(
+                partial: 'search/results/protocols.html.erb', locals: {search_query: @search_query,
+                                                             results: @protocol_results }
+              )
+    end
+    if (@search_category == :steps && @step_search_count > 0)
+      content = render_to_string(
+                partial: 'search/results/steps.html.erb', locals: {search_query: @search_query,
+                                                         results: @step_results }
+              )
+    end
+    if (@search_category == :checklists && @checklist_search_count > 0)
+      content = render_to_string(
+                partial: 'search/results/checklists.html.erb', locals: {search_query: @search_query,
+                                                              results: @checklist_results }
+              )
+    end
+    if (@search_category == :samples && @sample_search_count > 0)
+      content = render_to_string(
+                partial: 'search/results/samples.html.erb', locals: {search_query: @search_query,
+                                                           results: @sample_results }
+              )
+    end
+    if (@search_category == :assets && @asset_search_count > 0)
+      content = render_to_string(
+                partial: 'search/results/assets.html.erb', locals: {search_query: @search_query,
+                                                          results: @asset_results }
+              )
+    end
+    if (@search_category == :tables && @table_search_count > 0)
+      content = render_to_string(
+                partial: 'search/results/tables.html.erb', locals: {search_query: @search_query,
+                                                           results: @table_results }
+              )
+    end
+    if (@search_category == :comments && @comment_search_count > 0)
+      content = render_to_string(
+                partial: 'search/results/comments.html.erb', locals: {search_query: @search_query,
+                                                            results: @comment_results }
+              )
+    end
+    content
   end
 end

@@ -313,15 +313,20 @@ function sampleInfoClickListener() {
         $.ajax({
             method: "GET",
             url: that.attr("data-href"),
-            dataType: "json"
+            dataType: "json",
+            beforeSend: animateSpinner($("#modal-info-sample"), true)
         }).done(function(xhr, settings, data) {
-            debugger;
+            animateSpinner($("#modal-info-sample"), false);
             $("#modal-info-sample")
+                    .find("#search-content")
+                    .empty();
+            $("#modal-info-sample")
+                .find("#search-content")
+                .append($.parseHTML(data.responseJSON.content));
         }).fail(function(error){
-            // TODO
-            debugger;
+            animateSpinner($("#modal-info-sample"), false);
         }).always(function(data){
-            // TODO
+            animateSpinner($("#modal-info-sample"), false);
         })
       })
 }

@@ -1,12 +1,12 @@
 module SearchActions
-  @@targetController = :search
+  @targetController = :search
 
   def self.set(param)
-  	@@targetController = param
+  	@targetController = param
   end
 
   def search_by_name(model)
-    if @@targetController == :samples && model == User
+    if @targetController == :samples && model == User
       model.search(true, @search_query, nil)
     else
       model.search(current_user, true, @search_query, @search_page)
@@ -31,7 +31,7 @@ module SearchActions
     @asset_search_count = count_by_name Asset
     @table_search_count = count_by_name Table
     @comment_search_count = count_by_name Comment
-    if @@targetController == :samples
+    if @targetController == :samples
       @user_search_count = count_by_name User
     else
       @sample_search_count = count_by_name Sample
@@ -50,7 +50,7 @@ module SearchActions
     @search_results_count += @asset_search_count
     @search_results_count += @table_search_count
     @search_results_count += @comment_search_count
-    if @@targetController == :samples
+    if @targetController == :samples
       @search_results_count += @user_search_count
     else
       @search_results_count += @sample_search_count
