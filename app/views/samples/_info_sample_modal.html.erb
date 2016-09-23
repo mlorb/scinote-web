@@ -179,19 +179,7 @@
                   <%= t'Comments' %>
                 </a>
               </li>
-              <li role="presentation"
-                class="
-                <%= "active" if @search_category.present? and @search_category == :users %>
-                <%= "disabled" if @user_search_count == 0 %>"
-              >
-                <a href="#"
-                   data-href="<%= sample_url(@sample, category: 'users', q: @search_query, utf8: '✓') %>"
-                   data-searchCategory="<%= ( @user_search_count > 0 ) ? 'present' : 'notPresent' %>">
-                  <span class="badge pull-right"><%= @user_search_count %></span>
-                  <span class="glyphicon glyphicon-user"></span>
-                  <%= t'Comments' %>
-                </a>
-              </li>
+              
             </ul>
           </div>
 
