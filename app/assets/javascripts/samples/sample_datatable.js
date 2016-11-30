@@ -29,7 +29,8 @@ table = $("#samples").DataTable({
         type: "POST"
     },
     colReorder: {
-        fixedColumnsLeft: 1000000 // Disable reordering
+        //fixedColumnsLeft: 1000000 // Disable reordering
+        realtime: false
     },
     columnDefs: [{
         targets: 0,
@@ -100,16 +101,51 @@ table = $("#samples").DataTable({
     },
     stateSaveCallback: function (settings, data) {
         // Set a cookie with the table state using the organization id
-        localStorage.setItem('datatables_state/' + $("#samples").attr("data-organization-id"), JSON.stringify(data));
+        // localStorage.setItem('datatables_state/' + $("#samples").attr("data-organization-id"), JSON.stringify(data));
+
+        // Send an Ajax request to the server with the state object
+        var org = $("#samples").attr("data-organization-id")
+        debugger;
+        $.ajax( {
+          url: '/state_save',
+          data: {org: org, state: data},
+          dataType: "json",
+          type: "POST",
+          success: function () {debugger;},
+          error: function () {debugger;}
+        } );
     },
+
     stateLoadCallback: function (settings) {
         // Load the table state for the current organization
-        var state = localStorage.getItem('datatables_state/' + $("#samples").attr("data-organization-id"));
-        if (state !== null) {
-           return JSON.parse(state);
-        }
-        return null;
+     //   var state = localStorage.getItem('datatables_state/' + $("#samples").attr("data-organization-id"));
+    //    if (state !== null) {
+    //       return JSON.parse(state);
+    //    }
+    //    return null;
+
+        var o;
+        // Send an Ajax request to the server to get the data. Note that
+        // this is a synchronous request since the data is expected back from the
+        // function
+        var org = $("#samples").attr("data-organization-id")
+        debugger;
+        $.ajax( {
+          url: '/state_load',
+          data: {org: org},
+          async: false,
+          dataType: "json",
+          type: "POST",
+          success: function (json) {
+            o = json;
+            debugger;
+          },
+          error: function (json) {debugger;}
+        } );
+
+        return o;
     },
+
     preDrawCallback: function(settings) {
         animateSpinner(this);
         $(".sample_info").off("click");

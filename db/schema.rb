@@ -498,11 +498,11 @@ ActiveRecord::Schema.define(version: 20161123161514) do
   add_index "samples", ["user_id"], name: "index_samples_on_user_id", using: :btree
 
   create_table "samples_tables", force: :cascade do |t|
-    t.jsonb    "preferences",     default: {}, null: false
-    t.integer  "user_id",                      null: false
-    t.integer  "organization_id",              null: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.jsonb    "status",          default: [{"name"=>"Assigned", "position"=>1, "visibility"=>true}, {"name"=>"Sample name", "position"=>2, "visibility"=>true}, {"name"=>"Sample type", "position"=>3, "visibility"=>true}, {"name"=>"Sample group", "position"=>4, "visibility"=>true}, {"name"=>"Added on", "position"=>5, "visibility"=>true}, {"name"=>"Added by", "position"=>6, "visibility"=>true}], null: false
+    t.integer  "user_id",                                                                                                                                                                                                                                                                                                                                                                                    null: false
+    t.integer  "organization_id",                                                                                                                                                                                                                                                                                                                                                                            null: false
+    t.datetime "created_at",                                                                                                                                                                                                                                                                                                                                                                                 null: false
+    t.datetime "updated_at",                                                                                                                                                                                                                                                                                                                                                                                 null: false
   end
 
   add_index "samples_tables", ["organization_id"], name: "index_samples_tables_on_organization_id", using: :btree
@@ -782,8 +782,6 @@ ActiveRecord::Schema.define(version: 20161123161514) do
   add_foreign_key "samples", "sample_types"
   add_foreign_key "samples", "users"
   add_foreign_key "samples", "users", column: "last_modified_by_id"
-  add_foreign_key "samples_tables", "organizations"
-  add_foreign_key "samples_tables", "users"
   add_foreign_key "step_assets", "assets"
   add_foreign_key "step_assets", "steps"
   add_foreign_key "step_comments", "comments"

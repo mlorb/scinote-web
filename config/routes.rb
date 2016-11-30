@@ -5,6 +5,16 @@ Rails.application.routes.draw do
 
   root 'projects#index'
 
+  post '/state_save',
+         to: 'user_samples#save_samples_table_status',
+         as: 'save_samples_table_status',
+         defaults: { format: 'json' }
+
+  post '/state_load',
+         to: 'user_samples#load_samples_table_status',
+         as: 'load_samples_table_status',
+         defaults: { format: 'json' }
+
   resources :activities, only: [:index]
 
   get "forbidden", :to => "application#forbidden", as: "forbidden"
