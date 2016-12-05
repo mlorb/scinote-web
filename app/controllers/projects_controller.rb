@@ -283,9 +283,12 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json {
-        render json: ::SampleDatatable.new(view_context, @organization, @project, nil)
-      }
+      format.json do
+        render json: ::SampleDatatable.new(view_context,
+                                           @organization,
+                                           @project,
+                                           nil)
+      end
     end
   end
 

@@ -5,12 +5,12 @@ Rails.application.routes.draw do
 
   root 'projects#index'
 
-  post '/state_save',
+  post '/state_save/:organization_id/:user_id',
          to: 'user_samples#save_samples_table_status',
          as: 'save_samples_table_status',
          defaults: { format: 'json' }
 
-  post '/state_load',
+  post '/state_load/:organization_id/:user_id',
          to: 'user_samples#load_samples_table_status',
          as: 'load_samples_table_status',
          defaults: { format: 'json' }

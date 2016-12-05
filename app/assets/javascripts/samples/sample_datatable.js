@@ -6,6 +6,8 @@ var currentMode = "viewMode";
 // Tells what action will execute by pressing on save button (update/create)
 var saveAction = "update";
 var selectedSample;
+var myData;
+var loadFirstTime = true;
 
 table = $("#samples").DataTable({
     order: [[2, "desc"]],
@@ -105,51 +107,70 @@ table = $("#samples").DataTable({
 
         // Send an Ajax request to the server with the state object
         var org = $("#samples").attr("data-organization-id")
+        var user = $("#samples").attr("data-user-id")
+
+        if (loadFirstTime == true) {
+          data = myData;
+        }
+        
         debugger;
         $.ajax( {
-          url: '/state_save',
+          url: '/state_save/'+org+'/'+user,
           data: {org: org, state: data},
           dataType: "json",
           type: "POST",
-          success: function () {debugger;},
-          error: function () {debugger;}
+          success: function () {},
+          error: function () {}
         } );
+        loadFirstTime = false;
     },
 
     stateLoadCallback: function (settings) {
         // Load the table state for the current organization
-     //   var state = localStorage.getItem('datatables_state/' + $("#samples").attr("data-organization-id"));
-    //    if (state !== null) {
-    //       return JSON.parse(state);
-    //    }
-    //    return null;
+       // var state = localStorage.getItem('datatables_state/' + $("#samples").attr("data-organization-id"));
+       // if (state !== null) {
+       //    return JSON.parse(state);
+       // }
+       // return null;
 
-        var o;
-        // Send an Ajax request to the server to get the data. Note that
-        // this is a synchronous request since the data is expected back from the
-        // function
+         var o;
+        // // Send an Ajax request to the server to get the data. Note that
+        // // this is a synchronous request since the data is expected back from the
+        // // function
         var org = $("#samples").attr("data-organization-id")
-        debugger;
+        var user = $("#samples").attr("data-user-id")
+
         $.ajax( {
-          url: '/state_load',
+          url: '/state_load/'+org+'/'+user,
           data: {org: org},
           async: false,
           dataType: "json",
           type: "POST",
           success: function (json) {
-            o = json;
+            o = json.state;
             debugger;
           },
-          error: function (json) {debugger;}
+          error: function (json) {}
         } );
-
+        myData = o;
         return o;
     },
 
     preDrawCallback: function(settings) {
         animateSpinner(this);
         $(".sample_info").off("click");
+    },
+    fnInitComplete: function(oSettings, json) {
+        debugger;
+        oSettings._colReorder.fnOrder(myData.ColReorder);
+        var columns_data = oSettings.aoColumns;
+        for (var i = 0; i < columns_data.length; i++) {
+            columns_data[i].bVisible = myData.columns[i].visible;
+            //debugger;
+        }
     }
+    
+    
 });
 
 table.buttons().container().appendTo('#datatables-buttons');
