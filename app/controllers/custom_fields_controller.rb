@@ -53,7 +53,8 @@ class CustomFieldsController < ApplicationController
       format.json do
         render json: {
           html: render_to_string(
-            partial: 'samples/delete_custom_field_modal_body.html.erb'
+            partial: 'samples/delete_custom_field_modal_body.html.erb',
+            locals: { pos: params[:position] }
           )
         }
       end
@@ -70,6 +71,8 @@ class CustomFieldsController < ApplicationController
         end
       end
     end
+    SamplesTable.update_samples_table_state(@custom_field,
+                                            params['custom_field']['position'])
   end
 
   private
@@ -100,6 +103,6 @@ class CustomFieldsController < ApplicationController
   end
 
   def custom_field_params
-    params.require(:custom_field).permit(:name)
+    params.require(:custom_field).permit(:name, :params)
   end
 end

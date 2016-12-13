@@ -7,14 +7,19 @@ class SamplesTable < ActiveRecord::Base
   scope :find_status,
         ->(org, user) { where(user: user, organization: org).pluck(:status) }
 
-  def self.update_samples_table_state(custom_field)
+  def self.update_samples_table_state(custom_field, position)
     samples_table = SamplesTable.where(user: custom_field.user,
                                        organization: custom_field.organization)
     org_status = samples_table.first['status']
-    index = org_status['columns'].count
-    org_status['columns'][index] = SampleDatatable::
-                                   SAMPLES_TABLE_DEFAULT_STATE['columns'].first
-    org_status['ColReorder'] << index.to_s
+    if position
+      org_status['columns'].delete(position)
+      org_status['ColReorder'].delete(position)
+    else
+      index = org_status['columns'].count
+      org_status['columns'][index] = SampleDatatable::
+                                     SAMPLES_TABLE_DEFAULT_STATE['columns'].first
+      org_status['ColReorder'] << index.to_s
+    end
     samples_table.first.update(status: org_status)
   end
 

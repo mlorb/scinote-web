@@ -131,6 +131,7 @@ function dataTableInit() {
     fnInitComplete: function(oSettings, json) {
       // Reload correct column order and visibility (if you refresh page)
       for (var i = 0; i < table.columns()[0].length; i++) {
+        debugger
         var visibility = myData.columns[i].visible;
         if (typeof (visibility) === 'string') {
           visibility = (visibility === 'true');
@@ -1120,11 +1121,13 @@ function changeToEditMode() {
       var self = $(this);
       var li = self.closest('li');
       var url = li.attr('data-destroy-html-url');
+      var pos = li.attr('data-position');
 
       $.ajax({
         url: url,
         type: 'GET',
         dataType: 'json',
+        data: { position: pos },
         success: function(data) {
           var modalBody = modal.find('.modal-body');
 
