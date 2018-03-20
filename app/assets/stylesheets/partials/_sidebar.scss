@@ -22,11 +22,10 @@ $toggle-btn-size: 50px;
   transition: all 0.5s ease;
 
   #sidebar-wrapper {
-    background-color: $color-alto;
+    background-color: $color-white;
     z-index: 1000;
     position: fixed;
     width: $wrapper-width;
-    left: $wrapper-width;
     height: 100%;
     margin-left: -$wrapper-width;
     -webkit-transition: all 0.5s ease;
@@ -85,7 +84,8 @@ $toggle-btn-size: 50px;
       .tree {
         overflow-y: auto;
         margin-bottom: 0;
-        padding-top: 15px;
+        // padding-top: 15px;
+        padding: 20px 0px;
         opacity: 1;
 
         // Animations
@@ -99,6 +99,7 @@ $toggle-btn-size: 50px;
   padding-left: 0;
 
   #sidebar-wrapper {
+    margin-left: 0;
     width: 0;
 
     #slide-panel {
