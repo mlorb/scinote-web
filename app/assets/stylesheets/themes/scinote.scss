@@ -1678,7 +1678,7 @@ textarea.textarea-sm {
 .smart-dropdown {
   overflow-y: auto;
   padding: 0;
-  width: 300px;
+  // width: 300px;
 
   .modal-tooltiptext {
     margin-left: 0;
@@ -1687,7 +1687,7 @@ textarea.textarea-sm {
 
   li:not(.dropdown-header) {
     background: $color-white;
-    border: 1px solid $color-alto;
+    border-bottom: 1px solid $color-alto;
     padding: 10px 10px 10px 0;
     vertical-align: middle;
   }

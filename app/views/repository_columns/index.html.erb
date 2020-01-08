@@ -39,17 +39,15 @@
               </div>
               <div class="col-xs-4">
                 <span class="controlls pull-right">
-                  <button class="btn btn-default edit-repo-column manage-repo-column" 
+                  <button class="btn btn-default edit-repo-column manage-repo-column"
                           data-action="edit"
-                          data-modal-url="<%= edit_repository_repository_column_path(@repository, column) %>"
-                  >
+                          data-modal-url="<%= edit_repository_repository_column_path(@repository, column) %>">
                     <span class="fas fa-pencil-alt"></span>
                     <%=t 'libraries.repository_columns.index.edit_column'%>
                   </button>&nbsp;
-                  <button class="btn btn-default delete-repo-column manage-repo-column" 
+                  <button class="btn btn-default delete-repo-column manage-repo-column"
                           data-action="destroy"
-                          data-modal-url="<%= repository_columns_destroy_html_path(@repository, column) %>"
-                  >
+                          data-modal-url="<%= repository_columns_destroy_html_path(@repository, column) %>">
                     <span class="fas fa-trash-alt"></span>
                     <%=t 'libraries.repository_columns.index.delete_column'%>
                   </button>

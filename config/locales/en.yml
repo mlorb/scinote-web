@@ -1129,6 +1129,9 @@ en:
       invalid_arguments: "Can't find %{key}"
       nothing_to_delete: "Can't find sharing relation for destroy"
   libraries:
+    manange_modal_column_index:
+      title: "Manage columns"
+      add_column: "Add column"
     manange_modal_column:
       name_placeholder: "Enter column name..."
       name: "Name"

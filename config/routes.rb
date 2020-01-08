@@ -563,6 +563,10 @@ Rails.application.routes.draw do
       get 'repository_columns/:id/destroy_html',
           to: 'repository_columns#destroy_html',
           as: 'columns_destroy_html'
+      get 'index_html',
+          to: 'repository_columns#index_html',
+          as: 'columns_index_html',
+          defaults: { format: 'json' }
       get 'create_html',
           to: 'repository_columns#create_html',
           as: 'columns_create_html',

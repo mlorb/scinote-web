@@ -3,7 +3,7 @@ class RepositoryColumnsController < ApplicationController
   include RepositoryColumnsHelper
 
   ACTIONS = %i(
-    create index create_html available_asset_type_columns available_columns
+    create index index_html create_html available_asset_type_columns available_columns
   ).freeze
   before_action :load_vars,
                 except: ACTIONS
@@ -15,9 +15,15 @@ class RepositoryColumnsController < ApplicationController
   before_action :load_repository_columns, only: :index
   before_action :load_asset_type_columns, only: :available_asset_type_columns
 
+  def index_html
+    # byebug
+    render json: { id: @repository.id, html: render_to_string(partial: 'repository_columns/manage_column_modal_index.html.erb') }
+  end
+
   def index; end
 
   def create_html
+    # byebug
     @repository_column = RepositoryColumn.new
     respond_to do |format|
       format.json do
@@ -31,6 +37,7 @@ class RepositoryColumnsController < ApplicationController
   end
 
   def create
+    # byebug
     @repository_column = RepositoryColumn.new(repository_column_params)
     @repository_column.repository = @repository
     @repository_column.created_by = current_user
@@ -75,10 +82,12 @@ class RepositoryColumnsController < ApplicationController
   end
 
   def edit
+    # byebug
     render json: { html: render_to_string(partial: 'repository_columns/manage_column_modal_content.html.erb') }
   end
 
   def update
+    # byebug
     respond_to do |format|
       format.json do
         @repository_column.update(repository_column_params)
@@ -110,6 +119,7 @@ class RepositoryColumnsController < ApplicationController
   end
 
   def destroy_html
+    # byebug
     respond_to do |format|
       format.json do
         render json: {
@@ -122,6 +132,7 @@ class RepositoryColumnsController < ApplicationController
   end
 
   def destroy
+    # byebug
     column_id = @repository_column.id
     column_name = @repository_column.name
 

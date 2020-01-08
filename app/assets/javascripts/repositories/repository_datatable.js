@@ -213,6 +213,7 @@ var RepositoryDatatable = (function(global) {
   }
 
   function checkAvailableColumns() {
+    debugger
     $.ajax({
       url: $(TABLE_ID).data('available-columns'),
       type: 'GET',
@@ -972,6 +973,7 @@ var RepositoryDatatable = (function(global) {
    */
 
   function customLiHoverEffect() {
+    debugger
     var liEl = dropdownList.find('li');
     liEl.mouseover(function() {
       $(this).find('.grippy').addClass('grippy-img');
@@ -981,6 +983,7 @@ var RepositoryDatatable = (function(global) {
   }
 
   function toggleColumnVisibility() {
+    debugger
     var lis = dropdownList.find('.vis');
     lis.on('click', function(event) {
       var self = $(this);
@@ -1016,6 +1019,7 @@ var RepositoryDatatable = (function(global) {
 
   // loads the columns names in the dropdown list
   function loadColumnsNames() {
+    debugger
     // Save scroll position
     var scrollPosition = dropdownList.scrollTop();
     // Clear the list
@@ -1057,6 +1061,7 @@ var RepositoryDatatable = (function(global) {
   }
 
   function initSorting() {
+    debugger
     dropdownList.sortable({
       items: 'li:not(.repository-columns-list-template)',
       cancel: '.new-repository-column',
@@ -1089,6 +1094,7 @@ var RepositoryDatatable = (function(global) {
 
   // initialze dropdown after the table is loaded
   function initDropdown() {
+    debugger
     TABLE.on('init.dt', function() {
       dropdownList = $('#repository-columns-list');
       initSorting();
@@ -1106,6 +1112,7 @@ var RepositoryDatatable = (function(global) {
   }
 
   function init(id) {
+    debugger
     TABLE_ID = id;
     EDITABLE = $(TABLE_ID).data('editable');
     TABLE = dataTableInit();
