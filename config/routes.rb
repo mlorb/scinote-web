@@ -542,6 +542,9 @@ Rails.application.routes.draw do
            to: 'repository_rows#index',
            as: 'table_index',
            defaults: { format: 'json' }
+      member do
+        get :load_table
+      end
       # Save repository table state
       post 'state_save',
            to: 'user_repositories#save_table_state',

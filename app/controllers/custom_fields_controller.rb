@@ -10,7 +10,7 @@ class CustomFieldsController < ApplicationController
     @custom_field = CustomField.new(custom_field_params)
     @custom_field.team = @team
     @custom_field.user = current_user
-# byebug
+
     respond_to do |format|
       if @custom_field.save
         format.json do

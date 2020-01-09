@@ -9,7 +9,7 @@
 <%= render partial: "sidebar", locals: { repositories: @repositories } %>
 <div id="alert-container"></div>
 
-<div class="content-pane repository-show">
+<div class="content-pane repository-show" data-table-url="<%= load_table_repository_path(@repository) %> ">
   <div id="repository-toolbar">
     <div class="repository-title-name">
       <span class="name-container">

@@ -11,7 +11,7 @@ var RepositoryDatatable = (function(global) {
   'use strict';
 
   var TABLE_ID = '';
-  var TABLE_WRAPPER = $('.repository-table');
+  var TABLE_WRAPPER = '.repository-table';
   var TABLE = null;
   var EDITABLE = false;
 
@@ -250,7 +250,7 @@ var RepositoryDatatable = (function(global) {
   }
 
   function initSaveButton() {
-    TABLE_WRAPPER.on('click', '#saveRecord', function() {
+    $(TABLE_WRAPPER).on('click', '#saveRecord', function() {
       var $table = $(TABLE_ID);
       RepositoryDatatableRowEditor.validateAndSubmit($table);
     });
@@ -269,7 +269,7 @@ var RepositoryDatatable = (function(global) {
   }
 
   function initCancelButton() {
-    TABLE_WRAPPER.on('click', '#cancelSave', function() {
+    $(TABLE_WRAPPER).on('click', '#cancelSave', function() {
       resetTableView();
     });
   }

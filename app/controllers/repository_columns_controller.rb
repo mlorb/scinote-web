@@ -22,6 +22,8 @@ class RepositoryColumnsController < ApplicationController
 
   def index; end
 
+
+
   def create_html
     # byebug
     @repository_column = RepositoryColumn.new
@@ -49,19 +51,8 @@ class RepositoryColumnsController < ApplicationController
 
           if generate_repository_list_items(params[:list_items])
             render json: {
-              id: @repository_column.id,
-              name: escape_input(@repository_column.name),
               message: t('libraries.repository_columns.create.success_flash',
-                         name: @repository_column.name),
-              edit_url:
-                edit_repository_repository_column_path(@repository,
-                                                       @repository_column),
-              update_url:
-                repository_repository_column_path(@repository,
-                                                  @repository_column),
-              destroy_html_url:
-                repository_columns_destroy_html_path(@repository,
-                                                     @repository_column)
+                         name: @repository_column.name)
             },
             status: :ok
           else
@@ -97,7 +88,6 @@ class RepositoryColumnsController < ApplicationController
           if update_repository_list_items(params[:list_items])
             render json: {
               id: @repository_column.id,
-              name: escape_input(@repository_column.name),
               message: t('libraries.repository_columns.update.success_flash',
                          name: escape_input(@repository_column.name))
             }, status: :ok

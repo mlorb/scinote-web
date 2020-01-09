@@ -23,12 +23,22 @@ var RepositoryColumns = (function() {
     });
   }
 
-  // function removeElementFromDom(column) {
-  //   $('.repository-column-edtior .list-group-item[data-id="' + column.id + '"]').remove();
-  //   if ($('.list-group-item').length === 0) {
-  //     location.reload();
-  //   }
-  // }
+  function reloadDataTablePartial() {
+    // Append buttons for inventory datatable
+    $('div.toolbarButtonsDatatable').appendTo('.repository-show');
+    $('div.toolbarButtonsDatatable').hide();
+
+    // destroy datatable and remove partial
+    TABLE.destroy();
+    $('.repository-table').remove();
+
+    // reload datatable partial and intialize DataTable
+    $.get($('.repository-show').data('table-url'), (response) => {
+      $(response.html).appendTo($('.repository-show'));
+      RepositoryDatatable.init('#' + $('.repository-table table').attr('id'));
+      RepositoryDatatable.redrawTableOnSidebarToggle();
+    });
+  }
 
   function initDeleteSubmitAction() {
     var $manageModal = $(manageModal);
@@ -40,10 +50,13 @@ var RepositoryColumns = (function() {
         type: 'DELETE',
         dataType: 'json',
         success: (result) => {
+          reloadDataTablePartial();
           // removeElementFromDom(result);
-          HelperModule.flashAlertMsg(result.message, 'success');
+
           animateSpinner(null, false);
-          $manageModal.find('#back-to-column-modal').trigger('click');
+          $manageModal.find('.back-to-column-modal').trigger('click');
+
+          // HelperModule.flashAlertMsg(result.message, 'success');
         },
         error: (result) => {
           animateSpinner(null, false);
@@ -78,45 +91,6 @@ var RepositoryColumns = (function() {
     return allParams;
   }
 
-  // function insertNewListItem(column) {
-  //   var attributes = column.attributes;
-  //   var html = `<li class="list-group-item row" data-id="${column.id}">
-  //
-  //                 <div class="col-xs-8">
-  //                   <span class="pull-left column-name">${attributes.name}</span>
-  //                 </div>
-  //                 <div class="col-xs-4">
-  //                   <span class="controlls pull-right">
-  //                     <button class="btn btn-default edit-repo-column manage-repo-column"
-  //                             data-action="edit"
-  //                             data-modal-url="${attributes.edit_html_url}"
-  //                     >
-  //                     <span class="fas fa-pencil-alt"></span>
-  //                       ${ I18n.t('libraries.repository_columns.index.edit_column')}
-  //                     </button>
-  //                     <button class="btn btn-default delete-repo-column manage-repo-column"
-  //                             data-action="destroy"
-  //                             data-modal-url="${attributes.destroy_html_url}"
-  //                     >
-  //                       <span class="fas fa-trash-alt"></span>
-  //                       ${ I18n.t('libraries.repository_columns.index.delete_column')}
-  //                     </button>
-  //                   </span>
-  //                 </div>
-  //               </li>`;
-  //
-  //   // remove element if already persent
-  //   $('[data-id="' + column.id + '"]').remove();
-  //   $(html).insertBefore('.repository-columns-body ul li:first');
-  //   // remove 'no column' list item
-  //   $('[data-attr="no-columns"]').remove();
-  // }
-
-  // function updateListItem(column) {
-  //   var name = column.attributes.name;
-  //   $('li[data-id=' + column.id + ']').find('span').first().html(name);
-  // }
-
   function initCreateSubmitAction() {
     var $manageModal = $(manageModal);
     $manageModal.on('click', '#new-repo-column-submit', function() {
@@ -132,33 +106,11 @@ var RepositoryColumns = (function() {
         data: JSON.stringify(params),
         contentType: 'application/json',
         success: function(result) {
-          var data = result.data;
-          // insertNewListItem(data);
-          HelperModule.flashAlertMsg(data.attributes.message, 'success');
-          // $manageModal.modal('hide');
-          debugger;
-          TABLE.destroy();
-          // $(TABLE_ID).empty();
-          // $(TABLE_ID).off();
+          reloadDataTablePartial();
+          // show manage columns index modal
+          $manageModal.find('.back-to-column-modal').trigger('click');
 
-
-          $(TABLE_ID).remove();
-
-          // Add number of columns
-          $(TABLE_ID).data('num-columns',
-            $(TABLE_ID).data('num-columns') + 1);
-
-          $(TABLE_ID).data('repository-columns-ids').push(parseInt(data.id, 10));
-
-          $(TABLE_ID).find('thead tr').append(
-            '<th class="repository-column" id="' + data.id + '" ' +
-            'data-type="' + 'RepositoryTextValue' + '" ' +
-            '>' + data.attributes.name + '</th>'
-          );
-          RepositoryDatatable.init(TABLE_ID);
-
-
-          $manageModal.find('#back-to-column-modal').trigger('click');
+          // HelperModule.flashAlertMsg(result.data.attributes.message, 'success');
         },
         error: function(error) {
           $('#new-repository-column').renderFormErrors('repository_column', error.responseJSON.repository_column, true);
@@ -183,11 +135,11 @@ var RepositoryColumns = (function() {
         dataType: 'json',
         contentType: 'application/json',
         success: function(result) {
-          var data = result.data;
-          // updateListItem(data);
-          HelperModule.flashAlertMsg(data.attributes.message, 'success');
-          // $manageModal.modal('hide');
-          $manageModal.find('#back-to-column-modal').trigger('click');
+          reloadDataTablePartial();
+          // show manage columns index modal
+          $manageModal.find('.back-to-column-modal').trigger('click');
+
+          // HelperModule.flashAlertMsg(result.data.attributes.message, 'success');
         },
         error: function(error) {
           $('#new-repository-column').renderFormErrors('repository_column', error.responseJSON.repository_column, true);
@@ -198,7 +150,7 @@ var RepositoryColumns = (function() {
 
   function initBackToManageColumns() {
     var $manageModal = $(manageModal);
-    $manageModal.on('click', '#back-to-column-modal', function() {
+    $manageModal.on('click', '.back-to-column-modal', function() {
       debugger
       var button = $(this);
       initManageColumnModal1(button);

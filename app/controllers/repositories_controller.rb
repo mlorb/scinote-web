@@ -11,7 +11,7 @@ class RepositoriesController < ApplicationController
   before_action :load_parent_vars, except:
     %i(repository_table_index parse_sheet)
   before_action :check_view_all_permissions, only: :index
-  before_action :check_view_permissions, only: %i(export_repository show)
+  before_action :check_view_permissions, only: %i(load_table export_repository show)
   before_action :check_manage_permissions, only:
     %i(destroy destroy_modal rename_modal update)
   before_action :check_share_permissions, only: :share_modal
@@ -26,6 +26,16 @@ class RepositoriesController < ApplicationController
   def index
     redirect_to repository_path(@repositories.first) and return unless @repositories.length.zero? && current_team
     render 'repositories/index'
+  end
+
+  def load_table
+    render json: {
+      html: render_to_string(partial: 'repositories/repository_table.html.erb',
+                             locals: {
+                               repository: @repository,
+                               repository_index_link: repository_table_index_path(@repository)
+                             })
+    }
   end
 
   def show; end
